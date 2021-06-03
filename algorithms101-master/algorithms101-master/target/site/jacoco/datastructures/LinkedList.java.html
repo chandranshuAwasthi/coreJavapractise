@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">datastructures</a> &gt; <span class="el_source">LinkedList.java</span></div><h1>LinkedList.java</h1><pre class="source lang-java linenums">package datastructures;
+
+<span class="fc" id="L3">public class LinkedList {</span>
+
+    public class Node {
+        int data;
+        Node next;
+
+<span class="fc" id="L9">        public Node(int data) {</span>
+<span class="fc" id="L10">            this.data = data;</span>
+<span class="fc" id="L11">        }</span>
+    }
+
+    public Node head;
+
+    public void addFront(int data) {
+
+        // Create new node
+<span class="fc" id="L19">        Node newNode = new Node(data);</span>
+
+        // if head...
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (head == null) {</span>
+<span class="fc" id="L23">            head = newNode;</span>
+<span class="fc" id="L24">            return;</span>
+        }
+
+        // Set it's next to current head
+<span class="fc" id="L28">        newNode.next = head;</span>
+
+        // Set current head equal to this new head
+<span class="fc" id="L31">        head = newNode;</span>
+<span class="fc" id="L32">    }</span>
+
+    public int getFirst() {
+<span class="fc" id="L35">        return head.data;</span>
+    }
+
+    public int getLast() {
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (head == null) {</span>
+<span class="nc" id="L40">            throw new IllegalStateException(&quot;Empty list!&quot;);</span>
+        }
+
+<span class="fc" id="L43">        Node current = head;</span>
+
+        // while we are not at the tail
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        while (current.next != null) {</span>
+<span class="fc" id="L47">            current = current.next; // O(n)</span>
+        }
+
+        // We are at the tail
+<span class="fc" id="L51">        return current.data;</span>
+    }
+
+    public void addBack(int data) {
+<span class="fc" id="L55">        Node newNode = new Node(data);</span>
+
+        // if head... set and return
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (head == null) {</span>
+<span class="fc" id="L59">            head = newNode;</span>
+<span class="fc" id="L60">            return;</span>
+        }
+
+        // Else starting at head...
+<span class="fc" id="L64">        Node current = head;</span>
+
+        // Walk until to hit tail
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        while (current.next != null) {</span>
+<span class="fc" id="L68">            current = current.next;</span>
+        }
+
+        // Set current node to equal newNode
+<span class="fc" id="L72">        current.next = newNode;</span>
+<span class="fc" id="L73">    }</span>
+
+    public int size() {
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (head == null) {</span>
+<span class="fc" id="L78">            return 0;</span>
+        }
+
+<span class="fc" id="L81">        int count = 1;</span>
+<span class="fc" id="L82">        Node current = head;</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        while (current.next != null) {</span>
+<span class="fc" id="L85">            current = current.next;</span>
+<span class="fc" id="L86">            count++;</span>
+        }
+
+<span class="fc" id="L89">        return count;</span>
+    }
+
+    public void clear() {
+<span class="fc" id="L93">        head = null;</span>
+<span class="fc" id="L94">    }</span>
+
+    public void deleteValue(int data) {
+
+        // if head
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (head == null) {</span>
+<span class="nc" id="L100">            return;</span>
+        }
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (head.data == data) {</span>
+<span class="nc" id="L103">            head = head.next;</span>
+<span class="nc" id="L104">            return;</span>
+        }
+
+        // else walk the list
+<span class="fc" id="L108">        Node current = head;</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        while (current.next != null) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (current.next.data == data) {</span>
+<span class="fc" id="L112">                current.next = current.next.next;</span>
+<span class="fc" id="L113">                return;</span>
+            }
+<span class="fc" id="L115">            current = current.next;</span>
+        }
+<span class="nc" id="L117">    }</span>
+
+    public void print() {
+<span class="fc" id="L120">        Node current = head;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        while (current != null) {</span>
+<span class="fc" id="L122">            System.out.println(current.data);</span>
+<span class="fc" id="L123">            current = current.next;</span>
+        }
+<span class="fc" id="L125">        System.out.println(&quot;&quot;);</span>
+<span class="fc" id="L126">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

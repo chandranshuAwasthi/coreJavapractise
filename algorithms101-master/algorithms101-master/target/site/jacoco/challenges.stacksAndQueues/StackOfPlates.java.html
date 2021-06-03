@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StackOfPlates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.stacksAndQueues</a> &gt; <span class="el_source">StackOfPlates.java</span></div><h1>StackOfPlates.java</h1><pre class="source lang-java linenums">package challenges.stacksAndQueues;
+
+// Soln:
+// This problem isn't that bad if we just draw it out.
+// We basically need a collection of Stacks (which we can track in an ArrayList).
+// And whenever we exceed our threshold, we insert a new Stack.
+// And whenever we fall beneath it, we remove the old Stack.
+
+import java.util.ArrayList;
+import java.util.EmptyStackException;
+import java.util.Stack;
+
+public class StackOfPlates {
+
+<span class="fc" id="L15">    private int THRESHOLD = 0;</span>
+    private ArrayList&lt;Stack&gt; stacks;
+
+<span class="fc" id="L18">    public StackOfPlates(int THRESHOLD) {</span>
+<span class="fc" id="L19">        this.THRESHOLD = THRESHOLD;</span>
+<span class="fc" id="L20">        stacks = new ArrayList&lt;Stack&gt;();</span>
+<span class="fc" id="L21">        Stack stack = new Stack();</span>
+<span class="fc" id="L22">        stacks.add(stack);</span>
+<span class="fc" id="L23">    }</span>
+
+    public void push(int data) {
+<span class="fc" id="L26">        Stack current = getCurrentStack();</span>
+<span class="pc bpc" id="L27" title="1 of 4 branches missed.">        if (current != null &amp;&amp; current.size() &lt; this.THRESHOLD) {</span>
+<span class="fc" id="L28">            current.add(data);</span>
+        } else {
+<span class="fc" id="L30">            Stack newStack = new Stack();</span>
+<span class="fc" id="L31">            newStack.add(data);</span>
+<span class="fc" id="L32">            stacks.add(newStack);</span>
+        }
+<span class="fc" id="L34">    }</span>
+
+    public int pop() {
+<span class="fc" id="L37">        Stack current = getCurrentStack();</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (current == null) throw new EmptyStackException();</span>
+<span class="fc" id="L39">        int data = (Integer) current.pop();</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (current.size() == 0) {</span>
+<span class="fc" id="L42">            stacks.remove(stacks.size() - 1);</span>
+        }
+
+<span class="fc" id="L45">        return data;</span>
+    }
+
+    public Stack getCurrentStack() {
+<span class="fc" id="L49">        return stacks.get(stacks.size() - 1);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedListWithIndex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">datastructures</a> &gt; <span class="el_source">LinkedListWithIndex.java</span></div><h1>LinkedListWithIndex.java</h1><pre class="source lang-java linenums">package datastructures;
+
+<span class="fc" id="L3">public class LinkedListWithIndex {</span>
+
+    private static class Node {
+        int key;
+        int data;
+        Node next;
+
+<span class="fc" id="L10">        public Node(int key, int data) {</span>
+<span class="fc" id="L11">            this.key = key;</span>
+<span class="fc" id="L12">            this.data = data;</span>
+<span class="fc" id="L13">        }</span>
+    }
+
+    private Node head;
+
+    public void addFront(int key, int data) {
+
+<span class="fc" id="L20">        Node newNode = new Node(key, data);</span>
+
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (head == null) {</span>
+<span class="fc" id="L23">            head = newNode;</span>
+<span class="fc" id="L24">            return;</span>
+        }
+
+<span class="fc" id="L27">        newNode.next = head;</span>
+
+<span class="fc" id="L29">        head = newNode;</span>
+<span class="fc" id="L30">    }</span>
+
+    public int getByIndex(int key) {
+<span class="fc" id="L33">        Node current = head;</span>
+
+        // while we are not at the tail
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        while (current.next != null) {</span>
+            // If we have a match
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            if (current.key == key) {</span>
+<span class="fc" id="L39">                return current.data;</span>
+            }
+            // Else goto the next node
+<span class="fc" id="L42">            current = current.next;</span>
+        }
+
+        // Check the last node
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (current.key == key) {</span>
+<span class="fc" id="L47">            return current.data;</span>
+        }
+
+<span class="nc" id="L50">        return -1; // Not found</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

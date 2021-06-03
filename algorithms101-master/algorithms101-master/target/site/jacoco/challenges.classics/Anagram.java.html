@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Anagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">Anagram.java</span></div><h1>Anagram.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+import java.util.Arrays;
+import java.util.HashMap;
+
+<span class="fc" id="L6">public class Anagram {</span>
+
+    //
+    // Soln1:
+    //
+    // Build a map of each text's character and frequency and then compare to
+    // to see if they are the same.
+    //
+    public boolean isAnagram1(String text1, String text2) {
+
+        // Map 1
+<span class="fc" id="L17">        HashMap&lt;String, Integer&gt; map1 = map(text1);</span>
+
+        // Map 2
+<span class="fc" id="L20">        HashMap&lt;String, Integer&gt; map2 = map(text2);</span>
+
+        // Compare letters and frequency of characters in Maps
+<span class="fc" id="L23">        return map1.equals(map2);</span>
+    }
+
+    private HashMap&lt;String, Integer&gt; map(String text) {
+<span class="fc" id="L27">        HashMap&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();</span>
+
+<span class="fc" id="L29">        char[] chars = text.toCharArray();</span>
+
+        // Loop through and build the map one letter at a time...
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for (int i=0; i &lt; chars.length; i++) {</span>
+<span class="fc" id="L33">            String letter = String.valueOf(chars[i]);</span>
+
+            // if we already have, just increment
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">            if (map.containsKey(letter)) {</span>
+<span class="nc" id="L37">                Integer currentCount = map.get(letter);</span>
+<span class="nc" id="L38">                map.put(letter, currentCount + 1);</span>
+<span class="nc" id="L39">            } else { // else add</span>
+<span class="fc" id="L40">                map.put(letter, 1);</span>
+            }
+        }
+
+<span class="fc" id="L44">        return map;</span>
+    }
+
+    //
+    // Soln2:
+    //
+    // One string is an anagram of another if you can sort them alphabetically
+    // and they equal each other.
+    //
+    public boolean isAnagram2(String text1, String text2) {
+<span class="fc" id="L54">        char[] chars1 = text1.toCharArray();</span>
+<span class="fc" id="L55">        Arrays.sort(chars1);</span>
+
+<span class="fc" id="L57">        char[] chars2 = text2.toCharArray();</span>
+<span class="fc" id="L58">        Arrays.sort(chars2);</span>
+
+        // Note: Don't do ==
+<span class="fc" id="L61">        return Arrays.equals(chars1, chars2);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

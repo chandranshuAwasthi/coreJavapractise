@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharacterCount.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">CharacterCount.java</span></div><h1>CharacterCount.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+<span class="fc" id="L7">public class CharacterCount {</span>
+
+    public String maxChar(String text) {
+
+        // Build a map of character and count
+<span class="fc" id="L12">        HashMap&lt;String, Integer&gt; characterMap = map(text);</span>
+
+        // Return the max
+<span class="fc" id="L15">        return max(characterMap);</span>
+    }
+
+    private HashMap&lt;String, Integer&gt; map(String text) {
+<span class="fc" id="L19">        HashMap&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();</span>
+
+<span class="fc" id="L21">        char[] chars = text.toCharArray();</span>
+
+        // Loop through and build the map one letter at a time...
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        for (int i=0; i &lt; chars.length; i++) {</span>
+<span class="fc" id="L25">            String letter = String.valueOf(chars[i]);</span>
+
+            // if we already have, just increment
+<span class="fc bfc" id="L28" title="All 2 branches covered.">            if (map.containsKey(letter)) {</span>
+<span class="fc" id="L29">                Integer currentCount = map.get(letter);</span>
+<span class="fc" id="L30">                map.put(letter, currentCount + 1);</span>
+<span class="fc" id="L31">            } else { // else add</span>
+<span class="fc" id="L32">                map.put(letter, 1);</span>
+            }
+        }
+
+<span class="fc" id="L36">        return map;</span>
+    }
+
+    private String max(HashMap&lt;String, Integer&gt; map) {
+<span class="fc" id="L40">        int maxCount = 0;</span>
+<span class="fc" id="L41">        String maxLetter = &quot;&quot;;</span>
+
+        // Loop through keeping track of the highest letter count
+<span class="fc" id="L44">        Iterator it = map.entrySet().iterator();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        while (it.hasNext()) {</span>
+
+<span class="fc" id="L47">            Map.Entry pair = (Map.Entry)it.next();</span>
+<span class="fc" id="L48">            int value = (Integer)pair.getValue();</span>
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (value &gt; maxCount) {</span>
+<span class="fc" id="L51">                maxLetter = (String)pair.getKey();</span>
+<span class="fc" id="L52">                maxCount = (Integer)pair.getValue();</span>
+            }
+
+<span class="fc" id="L55">            it.remove(); // avoids a ConcurrentModificationException</span>
+<span class="fc" id="L56">        }</span>
+
+<span class="fc" id="L58">        return maxLetter;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FizzBuzz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">FizzBuzz.java</span></div><h1>FizzBuzz.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+<span class="fc" id="L3">public class FizzBuzz {</span>
+
+    //
+    // This solution is all about the 'modulus' operator.
+    // If you can divide the number by 3, 5, or 15 and have no remainder,
+    // you have a candidate for printing.
+    //
+    // Things to watch out for:
+    // - start your loop at index 1 and end at 101
+    // - know the modulus operator
+    //
+    public void print() {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        for (int i=1; i &lt; 101; i++) {</span>
+<span class="fc bfc" id="L16" title="All 4 branches covered.">            if (i % 3 == 0 &amp;&amp; i % 5 == 0) {</span>
+<span class="fc" id="L17">                System.out.println(&quot;FizzBuzz&quot;);</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">            } else if (i % 3 == 0) {</span>
+<span class="fc" id="L19">                System.out.println(&quot;Fizz&quot;);</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            } else if (i % 5 == 0) {</span>
+<span class="fc" id="L21">                System.out.println(&quot;Buzz&quot;);</span>
+            } else {
+<span class="fc" id="L23">                System.out.println(i);</span>
+            }
+        }
+<span class="fc" id="L26">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

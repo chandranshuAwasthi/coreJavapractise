@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryIntegrationServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">demo</a> &gt; <span class="el_source">InventoryIntegrationServiceImpl.java</span></div><h1>InventoryIntegrationServiceImpl.java</h1><pre class="source lang-java linenums">package demo;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+<span class="fc" id="L8">public class InventoryIntegrationServiceImpl {</span>
+
+<span class="fc" id="L10">	ProductInstanceCharacteristicValueInventoryService productInstanceCharacteristicValueInventoryService= null;</span>
+
+	public ProductInstanceCharacteristicValueInventoryService getProductInstanceCharacteristicValueInventoryService() {
+<span class="nc" id="L13">		return productInstanceCharacteristicValueInventoryService;</span>
+	}
+
+	public void setProductInstanceCharacteristicValueInventoryService(ProductInstanceCharacteristicValueInventoryService productInstanceCharacteristicValueInventoryService) {
+<span class="fc" id="L17">		this.productInstanceCharacteristicValueInventoryService = productInstanceCharacteristicValueInventoryService;</span>
+<span class="fc" id="L18">	}</span>
+
+	public String isEemcdApplicable(final Long ultimateProductInstanceId) throws Exception {
+<span class="fc" id="L21">		String isEemcdApplicable = null;</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">		if (ultimateProductInstanceId != null) {</span>
+<span class="fc" id="L23">			List&lt;ProductInstanceCharacteristicValue&gt; listOfPicvWithName = productInstanceCharacteristicValueInventoryService</span>
+<span class="fc" id="L24">					.getBillingPicvByultimateProductInstanceIdAndName(ultimateProductInstanceId, ApplicationConstants.SUPPLIERSERVICETYPE, ApplicationConstants.CPE_SUPPLIER_SERVICE_NAME);</span>
+<span class="fc bfc" id="L25" title="All 4 branches covered.">			if (CollectionUtils.isEmpty(listOfPicvWithName) || ( listOfPicvWithName.size() &lt; ApplicationConstants.MIN_BILL_PICV_SIZE)) {</span>
+<span class="fc" id="L26">				isEemcdApplicable = ApplicationConstants.EEMCD_NOT_APPLICABLE;</span>
+<span class="fc" id="L27">				return isEemcdApplicable;</span>
+			}
+<span class="fc" id="L29">			List&lt;ProductInstanceCharacteristicValue&gt; resultWithName = listOfPicvWithName.stream()</span>
+<span class="pc bpc" id="L30" title="1 of 4 branches missed.">					.filter(picvWithName -&gt; picvWithName != null &amp;&amp; picvWithName.getValue() != null</span>
+<span class="fc" id="L31">							&amp;&amp; (ApplicationConstants.EE_MOBILE_CUSTOMER_DISC.trim()</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">							.equalsIgnoreCase(picvWithName.getValue().replaceAll(&quot;\\s&quot;, &quot;&quot;))</span>
+							|| ApplicationConstants.DISCOUNT
+<span class="fc bfc" id="L34" title="All 2 branches covered.">							.equalsIgnoreCase(picvWithName.getValue().replaceAll(&quot;\\s&quot;, &quot;&quot;))))</span>
+<span class="fc" id="L35">					.collect(Collectors.toList());</span>
+			//resultWithName.size() &lt; ApplicationConstants.MIN_BILL_PICV_SIZE-- checking the size is greter than 2 which includes both serviceType and service name
+<span class="fc bfc" id="L37" title="All 4 branches covered.">			if (CollectionUtils.isEmpty(resultWithName) || resultWithName.size() &lt; ApplicationConstants.MIN_BILL_PICV_SIZE) {</span>
+<span class="fc" id="L38">				isEemcdApplicable = ApplicationConstants.EEMCD_NOT_APPLICABLE;</span>
+<span class="fc" id="L39">				return isEemcdApplicable ;</span>
+			}  else {
+<span class="fc" id="L41">				isEemcdApplicable = ApplicationConstants.EEMCD_APPLICABLE;</span>
+<span class="fc" id="L42">				return isEemcdApplicable;</span>
+			}
+		}
+<span class="nc" id="L45">		return isEemcdApplicable;</span>
+	}
+
+
+
+/**
+	 * Update address in customer vo.
+	 * 
+	 * @param customer
+	 *            the customer
+	 * @param customerVO
+	 *            the customer vo
+	 *//**
+	 * Updates the line detail vo with current installation address
+	 * 
+	 * @param lineDetails
+	 *            the line details
+	 * @param addressOutput
+	 *            The address output
+	 * @return Line details
+	 * @throws ApplicationException
+	 */
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SingleLinkedList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">datastructures</a> &gt; <span class="el_source">SingleLinkedList.java</span></div><h1>SingleLinkedList.java</h1><pre class="source lang-java linenums">package datastructures;
+
+<span class="fc" id="L3">public class SingleLinkedList&lt;E&gt; {</span>
+
+    public Node head;
+    public int size;
+
+    public void push(E e) {
+<span class="fc" id="L9">        Node newNode = new Node(e, null);</span>
+
+<span class="fc" id="L11">        newNode.next = head;</span>
+<span class="fc" id="L12">        head = newNode;</span>
+
+<span class="fc" id="L14">        size++;</span>
+<span class="fc" id="L15">    }</span>
+
+    public int lastIndexOf(E e) {
+<span class="fc" id="L18">        Node current = head;</span>
+<span class="fc" id="L19">        int index = 0;</span>
+
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        while (current.next != null) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if (current.item == e) return index;</span>
+<span class="fc" id="L23">            index++;</span>
+<span class="fc" id="L24">            current = current.next;</span>
+        }
+
+        // check the last node
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (current.item == e) return index;</span>
+
+<span class="nc" id="L30">        return -1;</span>
+    }
+
+    public E peek() {
+<span class="fc" id="L34">        Node&lt;E&gt; f = head;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        return (f == null) ? null : f.item;</span>
+    }
+
+    public E pop() {
+        // get the head
+        // assign head to it's next
+        // return head
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (head == null) return null;</span>
+
+<span class="fc" id="L44">        Node&lt;E&gt; first = head;</span>
+<span class="fc" id="L45">        head = first.next;</span>
+<span class="fc" id="L46">        size--;</span>
+
+<span class="fc" id="L48">        return first.item;</span>
+    }
+
+    public boolean remove(E e) {
+        // walk the list from the beginning
+        // delete and return true if found
+        // return false
+
+        // head
+<span class="fc" id="L57">        Node prev = null;</span>
+<span class="fc" id="L58">        Node current = head;</span>
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (current.item.equals(e)) {</span>
+            // make the next element the new head
+<span class="fc" id="L62">            head = current.next;</span>
+<span class="fc" id="L63">            size--;</span>
+<span class="fc" id="L64">            return true;</span>
+        }
+
+        // all others
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        while (current.next != null) {</span>
+<span class="nc" id="L69">            prev = current;</span>
+<span class="nc" id="L70">            current = current.next;</span>
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (current.item.equals(e)) {</span>
+                // connect the previous node next to this nodes next
+                // thereby bypassing this current node we want to delete
+<span class="nc" id="L75">                prev.next = current.next;</span>
+<span class="nc" id="L76">                size--;</span>
+<span class="nc" id="L77">                return true;</span>
+            }
+        }
+
+<span class="nc" id="L81">        return false;</span>
+    }
+
+    public void set(int index, E e) {
+
+<span class="fc" id="L86">        Node newNode = new Node(e, null);</span>
+
+        // head
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (index == 0) {</span>
+<span class="fc" id="L90">            newNode.next = head.next;</span>
+<span class="fc" id="L91">            head = newNode;</span>
+<span class="fc" id="L92">            return;</span>
+        }
+
+        // all others
+        // take the previous node
+        // attach it's next to this new node
+        // attach this new node to current next node
+
+<span class="fc" id="L100">        Node prev = head;</span>
+<span class="fc" id="L101">        Node current = head.next;</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        for (int counter = 1; counter &lt;= index; counter++) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (counter == index) {</span>
+<span class="fc" id="L105">                prev.next = newNode;</span>
+<span class="fc" id="L106">                newNode.next = current.next;</span>
+<span class="fc" id="L107">                return;</span>
+            } else {
+<span class="fc" id="L109">                prev = current;</span>
+<span class="fc" id="L110">                current = current.next;</span>
+            }
+        }
+
+<span class="nc" id="L114">    }</span>
+
+    private static class Node&lt;E&gt; {
+        E item;
+        Node&lt;E&gt; next;
+
+<span class="fc" id="L120">        Node(E element, Node&lt;E&gt; next) {</span>
+<span class="fc" id="L121">            this.item = element;</span>
+<span class="fc" id="L122">            this.next = next;</span>
+<span class="fc" id="L123">        }</span>
+    }
+}
+
+
+
+/*
+ push() is neat because you are basically:
+
+Creating a new node, assigning the old head value to be the next chain in the link (like adding), and the making
+new node you just created the next head. So you are just bumping everything down one.
+
+ 1. Creating a new node.
+ 2. Assigning it's next to the current head (which at first is null because it is empty).
+ 3. And then assigning this newNode to the head. So it is at the front of the list.
+
+ Then when you add the next node you repeat the process.
+ 1. Create the new node.
+ 2. Assign it's next to the current head of the list (the last element you added).
+ 3. And then making this next node the head.
+
+ So you are basically constantly taking making new nodes, assigning their next to be current head.
+ And then assigning them to be the new head (while their next points to the old head).
+ And you just keep doing this.
+
+*/
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleBinarySearchTree.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.binaryTrees</a> &gt; <span class="el_source">SimpleBinarySearchTree.java</span></div><h1>SimpleBinarySearchTree.java</h1><pre class="source lang-java linenums">package challenges.binaryTrees;
+
+public class SimpleBinarySearchTree {
+
+    class Node {
+        int key;
+        Node left, right;
+
+<span class="fc" id="L9">        public Node(int key) {</span>
+<span class="fc" id="L10">            this.key = key;</span>
+<span class="fc" id="L11">        }</span>
+    }
+
+    Node root;
+
+<span class="fc" id="L16">    public SimpleBinarySearchTree() {</span>
+<span class="fc" id="L17">        root = null;</span>
+<span class="fc" id="L18">    }</span>
+
+    public void insert(int key) {
+<span class="fc" id="L21">        root = insertItem(root, key);</span>
+<span class="fc" id="L22">    }</span>
+
+    public Node insertItem(Node node, int key) {
+
+<span class="fc" id="L26">        Node newNode = new Node(key);</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (node == null) {</span>
+<span class="fc" id="L29">            node = newNode;</span>
+<span class="fc" id="L30">            return node;</span>
+        }
+
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (key &lt; node.key) {</span>
+<span class="fc" id="L34">            node.left = insertItem(node.left, key);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        } if (key &gt; node.key) {</span>
+<span class="fc" id="L36">            node.right = insertItem(node.right, key);</span>
+        }
+
+<span class="fc" id="L39">        return node;</span>
+    }
+
+    public String getOrder() {
+<span class="fc" id="L43">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L44">        preOrderTraversal(root, sb);</span>
+<span class="fc" id="L45">        return sb.toString();</span>
+    }
+
+    public void printPreOrderTraversal() {
+<span class="nc" id="L49">        preOrderTraversal(root, null);</span>
+<span class="nc" id="L50">    }</span>
+
+    private void preOrderTraversal(Node node, StringBuilder sb) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (node != null) {</span>
+
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">            if (sb != null) {</span>
+<span class="fc" id="L56">                sb.append(node.key);</span>
+            }
+<span class="fc" id="L58">            preOrderTraversal(node.left, sb);</span>
+<span class="fc" id="L59">            preOrderTraversal(node.right, sb);</span>
+        }
+<span class="fc" id="L61">    }</span>
+
+    //
+    // Utils
+    //
+    public void prettyPrint() {
+        // Hard coded print out of binary tree depth = 3
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        int rootLeftKey = root.left == null ? 0 : root.left.key;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        int rootRightKey = root.right == null ? 0 : root.right.key;</span>
+
+<span class="nc" id="L72">        int rootLeftLeftKey = 0;</span>
+<span class="nc" id="L73">        int rootLeftRightKey = 0;</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (root.left != null) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            rootLeftLeftKey = root.left.left == null ? 0 : root.left.left.key;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            rootLeftRightKey = root.left.right == null ? 0 : root.left.right.key;</span>
+        }
+
+<span class="nc" id="L80">        int rootRightLeftKey = 0;</span>
+<span class="nc" id="L81">        int rootRightRightKey = 0;</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (root.right != null) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            rootRightLeftKey = root.right.left == null ? 0 : root.right.left.key;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            rootRightRightKey = root.right.right == null ? 0 : root.right.right.key;</span>
+        }
+
+<span class="nc" id="L88">        System.out.println(&quot;     &quot; + root.key);</span>
+<span class="nc" id="L89">        System.out.println(&quot;   /  \\&quot;);</span>
+<span class="nc" id="L90">        System.out.println(&quot;  &quot; + rootLeftKey + &quot;    &quot; + rootRightKey);</span>
+<span class="nc" id="L91">        System.out.println(&quot; / \\  / \\&quot;);</span>
+<span class="nc" id="L92">        System.out.println(rootLeftLeftKey + &quot;  &quot; + rootLeftRightKey + &quot; &quot; + rootRightLeftKey + &quot;   &quot; + rootRightRightKey);</span>
+<span class="nc" id="L93">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedListAdder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.linkedLists</a> &gt; <span class="el_source">LinkedListAdder.java</span></div><h1>LinkedListAdder.java</h1><pre class="source lang-java linenums">package challenges.linkedLists;
+
+import datastructures.Stack;
+
+<span class="fc" id="L5">public class LinkedListAdder {</span>
+
+    // Add numbers contained within two LinkedLists
+    public Stack sum(Stack first, Stack second) {
+        // Convert
+<span class="fc" id="L10">        int num1 = convertFrom(first);</span>
+<span class="fc" id="L11">        int num2 = convertFrom(second);</span>
+
+        // Add
+<span class="fc" id="L14">        int sum = num1 + num2;</span>
+
+        // Put back into LinkedList form
+<span class="fc" id="L17">        Stack total = convertTo(sum);</span>
+
+<span class="fc" id="L19">        return total;</span>
+    }
+
+    private int convertFrom(Stack stack) {
+        // Pop the numbers off the stack and build them up into a string, then an int
+<span class="fc" id="L24">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        while (!stack.isEmpty()) {</span>
+<span class="fc" id="L27">            int num = stack.pop();</span>
+<span class="fc" id="L28">            sb.append(num);</span>
+<span class="fc" id="L29">        }</span>
+
+<span class="fc" id="L31">        int result = Integer.parseInt(sb.toString());</span>
+
+<span class="fc" id="L33">        return result;</span>
+    }
+
+    private Stack convertTo(int number) {
+        // Because we need them in reverse order, store them here first,
+        // they flip to reverse order after
+
+<span class="fc" id="L40">        Stack forward = new Stack();</span>
+<span class="fc" id="L41">        Stack backward = new Stack();</span>
+
+        // Keep slicing off the digits by dividing by 10 and pushing the remainder
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        while (number &gt; 0) {</span>
+<span class="fc" id="L45">            forward.push(number % 10);</span>
+<span class="fc" id="L46">            number = number / 10;</span>
+        }
+
+        // Now put flip them over so they are reversed
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        while (!forward.isEmpty()) {</span>
+<span class="fc" id="L51">            backward.push(forward.pop());</span>
+        }
+
+<span class="fc" id="L54">        return backward;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

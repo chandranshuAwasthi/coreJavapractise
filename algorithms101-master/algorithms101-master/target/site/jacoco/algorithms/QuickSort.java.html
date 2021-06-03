@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuickSort.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">algorithms</a> &gt; <span class="el_source">QuickSort.java</span></div><h1>QuickSort.java</h1><pre class="source lang-java linenums">package algorithms;
+
+<span class="fc" id="L3">public class QuickSort {</span>
+
+    public int[] sort(int[] array) {
+        // Pick a pivot element randomly
+
+        // Walk through the array making sure that all the elements
+        // are smaller before the pivot, and that all elements after are bigger
+        // and we do this in place! That's the killer feature. No extra array required.
+        //
+        // Then we repeat the process to the left and right portions over and over again
+        // Then eventually our array becomes sorted.
+
+<span class="fc" id="L15">        quickSort(array, 0, array.length - 1);</span>
+
+<span class="fc" id="L17">        return array;</span>
+    }
+
+    private void quickSort(int[] array, int left, int right) {
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (left &gt;= right) {</span>
+<span class="fc" id="L22">            return;</span>
+        }
+
+        // Step 1: Pick a pivot element - we will choose the center
+        // Better would be to choose left + (right-left)/2 (as this would avoid overflow error for large arrays i.e. 2GB))
+<span class="fc" id="L27">        int pivot = array[(left + right)/2];</span>
+
+        // Step 2: Partition the array around this pivot - return the index of the partition
+<span class="fc" id="L30">        int index = partition(array, left, right, pivot);</span>
+
+        // Step 3: Sort on the left and the right side
+<span class="fc" id="L33">        quickSort(array, left, index - 1);</span>
+<span class="fc" id="L34">        quickSort(array, index, right);</span>
+<span class="fc" id="L35">    }</span>
+
+    private int partition(int[] array, int left, int right, int pivot) {
+        // Move the left and right pointers in towards each other
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        while (left &lt;= right) {</span>
+
+            // Move left until you find an element bigger than the pivot
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            while(array[left] &lt; pivot) {</span>
+<span class="fc" id="L43">                left++;</span>
+            }
+
+            // Move right until you find an element smaller than the pivot
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            while (array[right] &gt; pivot) {</span>
+<span class="fc" id="L48">                right--;</span>
+            }
+
+            // Then swap
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (left &lt;= right) {</span>
+<span class="fc" id="L53">                swap(array, left, right);</span>
+<span class="fc" id="L54">                left++;</span>
+<span class="fc" id="L55">                right--;</span>
+            }
+        }
+
+        // When we get here, everything in this partition will be in the right order
+        // Now we need to return next partition point - which for us will be left
+<span class="fc" id="L61">        return left;</span>
+    }
+
+    private void swap(int[] array, int left, int right) {
+<span class="fc" id="L65">        int temp = array[left];</span>
+<span class="fc" id="L66">        array[left] = array[right];</span>
+<span class="fc" id="L67">        array[right] = temp;</span>
+<span class="fc" id="L68">    }</span>
+
+    public void prettyPrint(int[] a) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (int i = 0; i &lt; a.length; i++) {</span>
+<span class="fc" id="L72">            System.out.println(a[i]);</span>
+        }
+<span class="fc" id="L74">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShortestPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">algorithms.graphs.dijsktra</a> &gt; <span class="el_source">ShortestPath.java</span></div><h1>ShortestPath.java</h1><pre class="source lang-java linenums">package algorithms.graphs.dijsktra;
+
+<span class="fc" id="L3">class ShortestPath {</span>
+
+    static final int V = 9; // No. of vertices
+
+    // A utility function to find the vertex with minimum distance value,
+    // from the set of vertices not yet included in shortest path tree
+    int nextMinDistance(int dist[], Boolean sptSet[]) {
+        // Initialize min value
+<span class="fc" id="L11">        int min = Integer.MAX_VALUE, min_index = -1;</span>
+
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        for (int v = 0; v &lt; V; v++)</span>
+<span class="fc bfc" id="L14" title="All 4 branches covered.">            if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min) {</span>
+<span class="fc" id="L15">                min = dist[v];</span>
+<span class="fc" id="L16">                min_index = v;</span>
+            }
+
+<span class="fc" id="L19">        return min_index;</span>
+    }
+
+    // Function that implements Dijkstra's single source shortest path
+    // algorithm for a graph represented using adjacency matrix
+    // representation
+    void dijkstra(int graph[][], int src) {
+
+        // The output array. dist[i] will hold
+        // the shortest distance from src to i
+<span class="fc" id="L29">        int dist[] = new int[V];</span>
+
+        // sptSet[i] will true if vertex i is included in shortest
+        // path tree or shortest distance from src to i is finalized
+<span class="fc" id="L33">        Boolean sptSet[] = new Boolean[V];</span>
+
+        // Initialize all distances as INFINITE and stpSet[] as false
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (int i = 0; i &lt; V; i++) {</span>
+<span class="fc" id="L37">            dist[i] = Integer.MAX_VALUE;</span>
+<span class="fc" id="L38">            sptSet[i] = false;</span>
+        }
+
+        // Distance of source vertex from itself is always 0
+<span class="fc" id="L42">        dist[src] = 0;</span>
+
+        // Find shortest path for all vertices
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (int count = 0; count &lt; V - 1; count++) {</span>
+            // Pick the minimum distance vertex from the set of vertices
+            // not yet processed. u is always equal to src in first
+            // iteration.
+<span class="fc" id="L49">            int u = nextMinDistance(dist, sptSet);</span>
+<span class="fc" id="L50">            System.out.println(&quot;Next min u = &quot; + u);</span>
+
+            // Mark the picked vertex as processed
+<span class="fc" id="L53">            sptSet[u] = true;</span>
+
+            // Update dist value of the adjacent vertices of the
+            // picked vertex.
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (int v = 0; v &lt; V; v++) {</span>
+<span class="fc" id="L58">                System.out.println(&quot;v = &quot; + v);</span>
+                // Update dist[v] only if is not in sptSet, there is an
+                // edge from u to v, and total weight of path from src to
+                // v through u is smaller than current value of dist[v]
+<span class="pc bpc" id="L62" title="1 of 8 branches missed.">                if (!sptSet[v] &amp;&amp; graph[u][v] != 0 &amp;&amp;</span>
+                        dist[u] != Integer.MAX_VALUE &amp;&amp;
+                        dist[u] + graph[u][v] &lt; dist[v]) {
+<span class="fc" id="L65">                    int newDistance = dist[u] + graph[u][v];</span>
+<span class="fc" id="L66">                    System.out.println(&quot;Shortest path to dist[&quot; + v + &quot;] = &quot; + dist[u] + &quot; + &quot; + graph[u][v] + &quot; = &quot; + newDistance);</span>
+<span class="fc" id="L67">                    dist[v] = dist[u] + graph[u][v];</span>
+                }
+            }
+        }
+
+        // print the constructed distance array
+<span class="fc" id="L73">        printSolution(dist, V);</span>
+<span class="fc" id="L74">    }</span>
+
+    // A utility function to print the constructed distance array
+    void printSolution(int dist[], int n) {
+<span class="fc" id="L78">        System.out.println(&quot;Vertex   Distance from Source&quot;);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (int i = 0; i &lt; V; i++)</span>
+<span class="fc" id="L80">            System.out.println(i + &quot; \t\t &quot; + dist[i]);</span>
+<span class="fc" id="L81">    }</span>
+
+    // based on https://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

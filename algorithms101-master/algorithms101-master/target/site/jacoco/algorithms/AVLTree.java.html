@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AVLTree.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">algorithms</a> &gt; <span class="el_source">AVLTree.java</span></div><h1>AVLTree.java</h1><pre class="source lang-java linenums">package algorithms;
+
+import static java.lang.System.out;
+
+class Node {
+    int key, height;
+    Node left, right;
+
+<span class="fc" id="L9">    Node(int d) {</span>
+<span class="fc" id="L10">        key = d;</span>
+<span class="fc" id="L11">        height = 1;</span>
+<span class="fc" id="L12">    }</span>
+}
+
+<span class="fc" id="L15">class AVLTree {</span>
+
+    Node root;
+
+    // A utility function to get the height of the tree
+    int height(Node N) {
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (N == null)</span>
+<span class="fc" id="L22">            return 0;</span>
+
+<span class="fc" id="L24">        return N.height;</span>
+    }
+
+    // A utility function to get maximum of two integers
+    int max(int a, int b) {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        return (a &gt; b) ? a : b;</span>
+    }
+
+    // A utility function to right rotate subtree rooted with y
+    // See the diagram given above.
+    Node rightRotate(Node y) {
+<span class="fc" id="L35">        Node x = y.left;</span>
+<span class="fc" id="L36">        Node T2 = x.right;</span>
+
+        // Perform rotation
+<span class="fc" id="L39">        x.right = y;</span>
+<span class="fc" id="L40">        y.left = T2;</span>
+
+        // Update heights
+<span class="fc" id="L43">        y.height = max(height(y.left), height(y.right)) + 1;</span>
+<span class="fc" id="L44">        x.height = max(height(x.left), height(x.right)) + 1;</span>
+
+        // Return new root
+<span class="fc" id="L47">        return x;</span>
+    }
+
+    // A utility function to left rotate subtree rooted with x
+    // See the diagram given above.
+    Node leftRotate(Node x) {
+<span class="fc" id="L53">        Node y = x.right;</span>
+<span class="fc" id="L54">        Node T2 = y.left;</span>
+
+        // Perform rotation
+<span class="fc" id="L57">        y.left = x;</span>
+<span class="fc" id="L58">        x.right = T2;</span>
+
+        //  Update heights
+<span class="fc" id="L61">        x.height = max(height(x.left), height(x.right)) + 1;</span>
+<span class="fc" id="L62">        y.height = max(height(y.left), height(y.right)) + 1;</span>
+
+        // Return new root
+<span class="fc" id="L65">        return y;</span>
+    }
+
+    // Get Balance factor of node N
+    int getBalance(Node N) {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (N == null)</span>
+<span class="nc" id="L71">            return 0;</span>
+
+<span class="fc" id="L73">        return height(N.left) - height(N.right);</span>
+    }
+
+    void insert(int key) {
+<span class="fc" id="L77">        root = insert(root, key);</span>
+<span class="fc" id="L78">    }</span>
+
+    Node insert(Node node, int key) {
+
+        /* 1.  Perform the normal BST insertion */
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (node == null)</span>
+<span class="fc" id="L84">            return (new Node(key));</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (key &lt; node.key)</span>
+<span class="fc" id="L87">            node.left = insert(node.left, key);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        else if (key &gt; node.key)</span>
+<span class="fc" id="L89">            node.right = insert(node.right, key);</span>
+        else // Duplicate keys not allowed
+<span class="nc" id="L91">            return node;</span>
+
+        /* 2. Update height of this ancestor node */
+<span class="fc" id="L94">        node.height = 1 + max(height(node.left),</span>
+<span class="fc" id="L95">                height(node.right));</span>
+
+        /* 3. Get the balance factor of this ancestor
+              node to check whether this node became
+              unbalanced */
+<span class="fc" id="L100">        int balance = getBalance(node);</span>
+
+        // If this node becomes unbalanced, then there
+        // are 4 cases Left Left Case
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        if (balance &gt; 1 &amp;&amp; key &lt; node.left.key) {</span>
+<span class="fc" id="L105">            return rightRotate(node);</span>
+        }
+
+        // Right Right Case
+<span class="fc bfc" id="L109" title="All 4 branches covered.">        if (balance &lt; -1 &amp;&amp; key &gt; node.right.key) {</span>
+<span class="fc" id="L110">            return leftRotate(node);</span>
+        }
+
+        // Left Right Case
+<span class="pc bpc" id="L114" title="1 of 4 branches missed.">        if (balance &gt; 1 &amp;&amp; key &gt; node.left.key) {</span>
+<span class="fc" id="L115">            node.left = leftRotate(node.left);</span>
+<span class="fc" id="L116">            return rightRotate(node);</span>
+        }
+
+        // Right Left Case
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        if (balance &lt; -1 &amp;&amp; key &lt; node.right.key) {</span>
+<span class="fc" id="L121">            node.right = rightRotate(node.right);</span>
+<span class="fc" id="L122">            return leftRotate(node);</span>
+        }
+
+        /* return the (unchanged) node pointer */
+<span class="fc" id="L126">        return node;</span>
+    }
+
+    public void printInOrderTraversal() {
+<span class="nc" id="L130">        inOrderTraversal(root);</span>
+<span class="nc" id="L131">    }</span>
+
+    private void inOrderTraversal(Node node) {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (node != null) {</span>
+<span class="nc" id="L135">            inOrderTraversal(node.left);</span>
+<span class="nc" id="L136">            out.println(node.key);</span>
+<span class="nc" id="L137">            inOrderTraversal(node.right);</span>
+        }
+<span class="nc" id="L139">    }</span>
+
+}
+
+// Code modified from https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

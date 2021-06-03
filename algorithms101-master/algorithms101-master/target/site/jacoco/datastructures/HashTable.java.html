@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HashTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">datastructures</a> &gt; <span class="el_source">HashTable.java</span></div><h1>HashTable.java</h1><pre class="source lang-java linenums">package datastructures;
+
+public class HashTable {
+
+<span class="fc" id="L5">    private int INITIAL_SIZE = 16;</span>
+    private HashEntry[] data; // LinkedList
+
+    class HashEntry {
+        String key;
+        String value;
+        HashEntry next;
+
+<span class="fc" id="L13">        HashEntry(String key, String value) {</span>
+<span class="fc" id="L14">            this.key = key;</span>
+<span class="fc" id="L15">            this.value = value;</span>
+<span class="fc" id="L16">            this.next = null;</span>
+<span class="fc" id="L17">        }</span>
+    }
+
+<span class="fc" id="L20">    HashTable() {</span>
+<span class="fc" id="L21">        data = new HashEntry[INITIAL_SIZE];</span>
+<span class="fc" id="L22">    }</span>
+
+    public void put(String key, String value) {
+
+        // Get the index
+<span class="fc" id="L27">        int index = getIndex(key);</span>
+
+        // Create the linked list entry
+<span class="fc" id="L30">        HashEntry entry = new HashEntry(key, value);</span>
+
+        // If no entry there - add it
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (data[index] == null) {</span>
+<span class="fc" id="L34">            data[index] = entry;</span>
+        }
+        // Else handle collision by adding to end of linked list
+        else {
+<span class="fc" id="L38">            HashEntry entries = data[index];</span>
+            // Walk to the end...
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            while(entries.next != null) {</span>
+<span class="nc" id="L41">                entries = entries.next;</span>
+            }
+            // Add our new entry there
+<span class="fc" id="L44">            entries.next = entry;</span>
+        }
+<span class="fc" id="L46">    }</span>
+
+    public String get(String key) {
+
+        // Get the index
+<span class="fc" id="L51">        int index = getIndex(key);</span>
+
+        // Get the current list of entries
+<span class="fc" id="L54">        HashEntry entries = data[index];</span>
+
+        // if we have existing entries against this key...
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (entries != null) {</span>
+            // else walk chain until find a match
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">            while (!entries.key.equals(key) &amp;&amp; entries.next !=null) {</span>
+<span class="fc" id="L60">                entries = entries.next;</span>
+            }
+            // then return it
+<span class="fc" id="L63">            return entries.value;</span>
+        }
+
+        // it we have no entries against this key...
+<span class="nc" id="L67">       return null;</span>
+    }
+
+    private int getIndex(String key) {
+        // Get the hash code
+<span class="fc" id="L72">        int hashCode = key.hashCode();</span>
+<span class="fc" id="L73">        System.out.println(&quot;hashCode = &quot; + hashCode);</span>
+
+        // Convert to index
+<span class="fc" id="L76">        int index = (hashCode &amp; 0x7fffffff) % INITIAL_SIZE;</span>
+//        int index = hashCode % INITIAL_SIZE;
+
+        // Hack to force collision for testing
+<span class="fc bfc" id="L80" title="All 4 branches covered.">        if (key.equals(&quot;John Smith&quot;) || key.equals(&quot;Sandra Dee&quot;)) {</span>
+<span class="fc" id="L81">            index = 4;</span>
+        }
+
+<span class="fc" id="L84">        System.out.println(&quot;index = &quot; + index);</span>
+
+<span class="fc" id="L86">        return index;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L91">        int bucket = 0;</span>
+<span class="fc" id="L92">        StringBuilder hashTableStr = new StringBuilder();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (HashEntry entry : data) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if(entry == null) {</span>
+<span class="fc" id="L95">                continue;</span>
+            }
+<span class="fc" id="L97">            hashTableStr.append(&quot;\n bucket[&quot;)</span>
+<span class="fc" id="L98">                    .append(bucket)</span>
+<span class="fc" id="L99">                    .append(&quot;] = &quot;)</span>
+<span class="fc" id="L100">                    .append(entry.toString());</span>
+<span class="fc" id="L101">            bucket++;</span>
+<span class="fc" id="L102">            HashEntry temp = entry.next;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            while(temp != null) {</span>
+<span class="fc" id="L104">                hashTableStr.append(&quot; -&gt; &quot;);</span>
+<span class="fc" id="L105">                hashTableStr.append(temp.toString());</span>
+<span class="fc" id="L106">                temp = temp.next;</span>
+            }
+        }
+<span class="fc" id="L109">        return hashTableStr.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

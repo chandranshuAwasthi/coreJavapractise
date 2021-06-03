@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinStack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.stacksAndQueues</a> &gt; <span class="el_source">MinStack.java</span></div><h1>MinStack.java</h1><pre class="source lang-java linenums">package challenges.stacksAndQueues;
+
+// Soln:
+//
+// We could scan the Stack every time a new min is added. But that would violate
+// our O(1) time constraint.
+//
+// A better way to do this would be to track the current min everytime a new item is added.
+// Then when we pop them off, we can simply return what would be the current min at that time.
+// This works because Stacks have in implied order. They never change. So we can do
+// something like this:
+//
+// push(5) - stack: 5 min: 5
+// push(6) - stack: 6, 5 min: 5
+// push(3) - stack: 3, 6, 5 min: 3
+// push(7) - stack: 7, 3, 6, 5 min: 3
+// pop() - stack: 3, 6, 5 min: 3
+// pop() - stack: 6, 5 min: 5
+//
+// See how our stack of 6, 5 goes back to it's min of 5?
+// Hence if we track the min as as push items, we can return the appropriate min
+// when our node comes to the top of stack (without having to rescan)
+
+<span class="fc" id="L24">public class MinStack {</span>
+
+    private class Node {
+
+        private int data;
+        private int min; // track here
+        private Node next;
+
+<span class="fc" id="L32">        private Node (int data, int min) {</span>
+<span class="fc" id="L33">            this.data = data;</span>
+<span class="fc" id="L34">            this.min = min;</span>
+<span class="fc" id="L35">        }</span>
+    }
+
+    private Node head;
+
+    public void push(int data) {
+<span class="fc" id="L41">        int min = data;</span>
+
+        // check for a min every time we add a node
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (head != null) {</span>
+<span class="fc" id="L45">            min = Math.min(data, min());</span>
+        }
+
+<span class="fc" id="L48">        Node newNode = new Node(data, min);</span>
+<span class="fc" id="L49">        newNode.next = head;</span>
+<span class="fc" id="L50">        head = newNode;</span>
+<span class="fc" id="L51">    }</span>
+
+    public int pop() {
+<span class="fc" id="L54">        int data = head.data;</span>
+<span class="fc" id="L55">        head = head.next;</span>
+
+<span class="fc" id="L57">        return data;</span>
+    }
+
+    public int min() {
+<span class="fc" id="L61">        return head.min;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

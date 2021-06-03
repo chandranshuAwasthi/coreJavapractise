@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Zeroer2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.arraysAndStrings</a> &gt; <span class="el_source">Zeroer2.java</span></div><h1>Zeroer2.java</h1><pre class="source lang-java linenums">package challenges.arraysAndStrings;
+
+
+<span class="fc" id="L4">public class Zeroer2 {</span>
+
+    // Solution: This solution uses the first row and column of the matrix as a means
+    // of storing with row and col need to nullified.
+
+    // 1. Check the first row and column for zeros (will nullify later if necessary).
+    // 2. Iterate the rest of the matrix setting the first row and column elements to
+    //    zero as we come across them. This works because it doesn't matter where the 0,
+    //    occurs in a row or column. Only that it appears.
+    // 3. Nullify any rows with zeros.
+    // 4. Nullify any columns with zeros.
+    // 5. Nullify the first row and column if it needs it.
+
+    public void zeroOut(int[][] matrix) {
+<span class="fc" id="L18">        boolean rowHasZero = false;</span>
+<span class="fc" id="L19">        boolean colHasZero = false;</span>
+
+        // Check if first row has a zero
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (int col = 0; col &lt; matrix[0].length; col++) {</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">            if (matrix[0][col] == 0) {</span>
+<span class="nc" id="L24">                rowHasZero = true;</span>
+<span class="nc" id="L25">                break;</span>
+            }
+        }
+
+        // Check if first column has a zero
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        for (int row = 0; row &lt; matrix.length; row++) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            if (matrix[row][0] == 0) {</span>
+<span class="fc" id="L32">                colHasZero = true;</span>
+<span class="fc" id="L33">                break;</span>
+            }
+        }
+
+        // Now check the rest of the array and mark any other rows and cols containing zeroes
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (int row = 1; row &lt; matrix.length; row++) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (int col = 0; col &lt; matrix[0].length; col++) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                if (matrix[row][col] == 0) {</span>
+<span class="fc" id="L41">                    matrix[row][0] = 0;</span>
+<span class="fc" id="L42">                    matrix[0][col] = 0;</span>
+                }
+            }
+        }
+
+        // Nullify rows based on values in first column
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (int row = 1; row &lt; matrix.length; row++) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">            if (matrix[row][0] == 0) {</span>
+<span class="fc" id="L50">                zeroOutRow(row, matrix);</span>
+            }
+        }
+
+        // Nullify columns based on values in first row
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int col = 1; col &lt; matrix[0].length; col++) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (matrix[0][col] == 0) {</span>
+<span class="fc" id="L57">                zeroOutCol(col, matrix);</span>
+            }
+        }
+
+        // Nullify first row
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (rowHasZero) {</span>
+<span class="nc" id="L63">            zeroOutRow(0, matrix);</span>
+        }
+
+        // Nullify first column
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (colHasZero) {</span>
+<span class="fc" id="L68">            zeroOutCol(0, matrix);</span>
+        }
+<span class="fc" id="L70">    }</span>
+
+    public void zeroOutRow(int y, int[][] matrix) {
+<span class="fc" id="L73">        int[] row = matrix[y];</span>
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int col = 0; col &lt; row.length; col++) {</span>
+<span class="fc" id="L76">            matrix[y][col] = 0;</span>
+        }
+<span class="fc" id="L78">    }</span>
+
+    public void zeroOutCol(int x, int[][] matrix) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for (int row = 0; row &lt; matrix.length; row++) {</span>
+<span class="fc" id="L82">            matrix[row][x] = 0;</span>
+        }
+<span class="fc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

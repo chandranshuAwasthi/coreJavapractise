@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FaceBookArrayIntersector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.interviews</a> &gt; <span class="el_source">FaceBookArrayIntersector.java</span></div><h1>FaceBookArrayIntersector.java</h1><pre class="source lang-java linenums">package challenges.interviews;
+
+import java.util.ArrayList;
+
+public class FaceBookArrayIntersector {
+
+<span class="nc" id="L7">    public FaceBookArrayIntersector() {</span>
+<span class="nc" id="L8">    }</span>
+
+    public ArrayList&lt;Integer&gt; intersect(int[] array1, int[] array2) {
+
+<span class="nc" id="L12">        ArrayList&lt;Integer&gt; collector = new ArrayList&lt;&gt;();</span>
+
+        // you try... scroll down to see solution below
+
+<span class="nc" id="L16">        return collector;</span>
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ArrayList&lt;Integer&gt; intersectBruteForce(int[] array1, int[] array2) {
+
+<span class="nc" id="L48">        ArrayList&lt;Integer&gt; collector = new ArrayList&lt;&gt;();</span>
+
+        // O(n)
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (int i : array1) {</span>
+            // O(m)
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            for (int j : array2) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                if (i == j) {</span>
+<span class="nc" id="L55">                    collector.add(i);</span>
+                }
+            }
+        }
+
+<span class="nc" id="L60">        return collector;</span>
+    }
+
+    public ArrayList&lt;Integer&gt; intersectElegant(int[] array1, int[] array2) {
+
+        // array1: i length m
+        // array2: i length n
+
+        // loop through both arrays
+        // if one element is less than the other ... there can be no intersection
+        //  - increment the lower pointer
+        //  - if elements are equal collect
+        //    - then increment either of the pointers
+
+<span class="nc" id="L74">        int i = 0; int m = array1.length;</span>
+<span class="nc" id="L75">        int j = 0; int n = array2.length;</span>
+
+<span class="nc" id="L77">        ArrayList&lt;Integer&gt; collector = new ArrayList&lt;&gt;();</span>
+
+        // O(n + m)
+<span class="nc bnc" id="L80" title="All 4 branches missed.">        while (i &lt; m &amp;&amp; j &lt; n) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (array1[i] &lt; array2[j]) {</span>
+<span class="nc" id="L82">                i++;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            } else if (array2[j] &lt; array1[i]) {</span>
+<span class="nc" id="L84">                j++;</span>
+            } else { // equal
+<span class="nc" id="L86">                collector.add(array1[i]);</span>
+<span class="nc" id="L87">                i++;</span>
+            }
+        }
+
+<span class="nc" id="L91">        return collector;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

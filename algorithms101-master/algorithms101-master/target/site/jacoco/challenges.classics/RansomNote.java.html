@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RansomNote.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">RansomNote.java</span></div><h1>RansomNote.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+import java.util.HashMap;
+
+<span class="fc" id="L5">public class RansomNote {</span>
+
+    //
+    // This is basically an exercise in counting and book keeping.
+    //
+    // If we can count the number of times a letter appears in the ransom note,
+    // and then compare it with the number of times it appears in the letters,
+    // we can tell if the ransom note can be written.
+    //
+
+    public boolean canWrite(String note, String letters) {
+
+        // Assumption: We don't need to count spaces in our note
+<span class="fc" id="L18">        String noteNoSpaces = note.replaceAll(&quot;\\s+&quot;,&quot;&quot;);</span>
+
+<span class="fc" id="L20">        HashMap&lt;String, Integer&gt; noteMap = map(noteNoSpaces);</span>
+<span class="fc" id="L21">        HashMap&lt;String, Integer&gt; letterMap = map(letters);</span>
+
+<span class="fc" id="L23">        return canWriteRansom(noteMap, letterMap);</span>
+    }
+
+    private HashMap&lt;String, Integer&gt; map(String text) {
+<span class="fc" id="L27">        HashMap&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();</span>
+<span class="fc" id="L28">        char[] characters = text.toCharArray();</span>
+
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int i=0; i &lt; characters.length; i++) {</span>
+
+<span class="fc" id="L32">            String character = String.valueOf(characters[i]);</span>
+
+            // If we already have this character...increment the count
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            if (map.containsKey(character)) {</span>
+<span class="fc" id="L36">                Integer currentCount = map.get(character);</span>
+<span class="fc" id="L37">                map.put(character, currentCount + 1);</span>
+<span class="fc" id="L38">            }</span>
+            // Else add
+            else {
+<span class="fc" id="L41">                map.put(String.valueOf(characters[i]), 1);</span>
+            }
+        }
+
+<span class="fc" id="L45">        return map;</span>
+    }
+
+    private boolean canWriteRansom(HashMap&lt;String, Integer&gt; noteMap, HashMap&lt;String, Integer&gt; letterMap) {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (String key : noteMap.keySet()) {</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (!letterMap.containsKey(key)) {</span>
+<span class="fc" id="L52">                return false;</span>
+            }
+
+<span class="fc" id="L55">            int noteCount = noteMap.get(key);</span>
+<span class="fc" id="L56">            int letterCount = letterMap.get(key);</span>
+
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            if (letterCount &lt; noteCount) {</span>
+<span class="nc" id="L59">                return false;</span>
+            }
+
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">        return true;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

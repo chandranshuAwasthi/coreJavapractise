@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringReverser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">StringReverser.java</span></div><h1>StringReverser.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+import java.util.HashMap;
+
+<span class="fc" id="L5">public class StringReverser {</span>
+
+    // Soln1: Easy - use StringBuilder
+
+    public String soln2(String text) {
+<span class="fc" id="L10">        StringBuilder sb = new StringBuilder(text);</span>
+<span class="fc" id="L11">        sb.reverse();</span>
+<span class="fc" id="L12">        return sb.toString();</span>
+    }
+
+
+    // Soln2: Create an array of chars and swap with pointers
+
+    public String soln1(String text) {
+
+        // Convert into array
+<span class="fc" id="L21">        char[] chars = text.toCharArray();</span>
+
+        // Initialize pointers
+        int left;
+<span class="fc" id="L25">        int right = text.length() - 1;</span>
+
+        // Loop through swapping left and right until we hit the middle
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (left = 0; left &lt; right; left++, right--) {</span>
+<span class="fc" id="L29">            char temp = chars[left];</span>
+<span class="fc" id="L30">            chars[left] = chars[right];</span>
+<span class="fc" id="L31">            chars[right] = temp;</span>
+        }
+
+<span class="fc" id="L34">        return String.valueOf(chars);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

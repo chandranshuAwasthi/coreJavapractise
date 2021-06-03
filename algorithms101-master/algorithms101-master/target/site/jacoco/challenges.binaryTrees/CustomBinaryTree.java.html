@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomBinaryTree.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.binaryTrees</a> &gt; <span class="el_source">CustomBinaryTree.java</span></div><h1>CustomBinaryTree.java</h1><pre class="source lang-java linenums">package challenges.binaryTrees;
+
+public class CustomBinaryTree {
+
+    public CustomBinaryTreeNode root;
+
+<span class="fc" id="L7">    public CustomBinaryTree(int key) {</span>
+<span class="fc" id="L8">        root = new CustomBinaryTreeNode(key);</span>
+<span class="fc" id="L9">    }</span>
+
+    public void add(CustomBinaryTreeNode parent, CustomBinaryTreeNode child, String orientation) {
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (orientation.equals(&quot;left&quot;)) {</span>
+<span class="fc" id="L13">            parent.left = child;</span>
+        } else {
+<span class="fc" id="L15">            parent.right = child;</span>
+        }
+<span class="fc" id="L17">    }</span>
+
+    public int countPathsWithSum(int targetSum) {
+<span class="fc" id="L20">        return countPathsWithSum(root, targetSum);</span>
+    }
+
+    private int countPathsWithSum(CustomBinaryTreeNode root, int targetSum) {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (root == null) return 0;</span>
+
+        // Count paths with sum starting from the root
+<span class="fc" id="L27">        int pathsFromRoot = countPathsWithSumFromNode(root, targetSum, 0);</span>
+
+        // Try the nodes on the left and the right
+<span class="fc" id="L30">        int pathsOnLeft = countPathsWithSum(root.left, targetSum);</span>
+<span class="fc" id="L31">        int pathsOnRight = countPathsWithSum(root.right, targetSum);</span>
+
+<span class="fc" id="L33">        return pathsFromRoot + pathsOnLeft + pathsOnRight;</span>
+    }
+
+    // Number of paths with this sum starting from this node
+    private int countPathsWithSumFromNode(CustomBinaryTreeNode node, int targetSum, int currentSum) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (node == null) return 0;</span>
+
+<span class="fc" id="L40">        currentSum += node.key;</span>
+
+<span class="fc" id="L42">        int totalPaths = 0;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (currentSum == targetSum) { // Found a path from the root</span>
+<span class="fc" id="L44">            totalPaths++;</span>
+        }
+
+<span class="fc" id="L47">        totalPaths += countPathsWithSumFromNode(node.left, targetSum, currentSum);</span>
+<span class="fc" id="L48">        totalPaths += countPathsWithSumFromNode(node.right, targetSum, currentSum);</span>
+<span class="fc" id="L49">        return totalPaths;</span>
+    }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

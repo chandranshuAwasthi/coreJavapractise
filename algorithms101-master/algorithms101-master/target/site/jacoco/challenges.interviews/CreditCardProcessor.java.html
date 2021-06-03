@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreditCardProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.interviews</a> &gt; <span class="el_source">CreditCardProcessor.java</span></div><h1>CreditCardProcessor.java</h1><pre class="source lang-java linenums">package challenges.interviews;
+
+public class CreditCardProcessor {
+
+    private CreditCard[] creditCards;
+
+    private CreditCard VISA;
+    private CreditCard Amex;
+    private CreditCard Discovery;
+    private CreditCard JCB;
+
+<span class="fc" id="L12">    public CreditCardProcessor() {</span>
+<span class="fc" id="L13">        VISA = new CreditCard(&quot;VISA&quot;, new String[]{&quot;4&quot;}, new int[]{16});</span>
+<span class="fc" id="L14">        Amex = new CreditCard(&quot;Amex&quot;, new String[]{&quot;34&quot;, &quot;37&quot;}, new int[]{15});</span>
+<span class="fc" id="L15">        Discovery = new CreditCard(&quot;Discovery&quot;, new String[]{&quot;60&quot;, &quot;65&quot;}, new int[]{16});</span>
+<span class="fc" id="L16">        JCB = new CreditCard(&quot;JCB&quot;, new String[]{&quot;35&quot;}, new int[]{16, 17, 18, 19});</span>
+
+<span class="fc" id="L18">        creditCards = new CreditCard[]{ VISA, Amex, Discovery, JCB };</span>
+<span class="fc" id="L19">    }</span>
+
+    public String getCardType(String cardNumber) {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (CreditCard creditCard : creditCards) {</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">            if (creditCard.matches(cardNumber)) {</span>
+<span class="fc" id="L24">                return creditCard.Name();</span>
+            }
+        }
+<span class="fc" id="L27">        return &quot;Unknown&quot;;</span>
+    }
+
+//    public String getCardType(String cardNumber) {
+//        if (cardNumber.startsWith(&quot;4111111111111111&quot;)) {
+//            return &quot;VISA&quot;;
+//        } else if (cardNumber.startsWith(&quot;341111111111111&quot;)) {
+//            return &quot;Amex&quot;;
+//        } else if (cardNumber.startsWith(&quot;371111111111111&quot;)) {
+//            return &quot;Amex&quot;;
+//        }
+//        return &quot;Unknown&quot;;
+//    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

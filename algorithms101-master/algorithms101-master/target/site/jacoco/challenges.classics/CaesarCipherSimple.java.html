@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CaesarCipherSimple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">CaesarCipherSimple.java</span></div><h1>CaesarCipherSimple.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+import java.util.HashMap;
+
+public class CaesarCipherSimple {
+
+    //
+    // This is a simple brute force first attempt that hard codes the shifting position,
+    // and encrpyts everything with a simple HashMap lookup.
+    //
+    // Assumptions:
+    // - cipher has offset x3
+    // - only handles capital letters
+
+    private HashMap&lt;String, String&gt; encryptMap;
+    private HashMap&lt;String, String&gt; decryptMap;
+
+<span class="fc" id="L18">    public CaesarCipherSimple() {</span>
+<span class="fc" id="L19">        encryptMap = createEncryptionMap();</span>
+<span class="fc" id="L20">        decryptMap = createDncryptionMap();</span>
+<span class="fc" id="L21">    }</span>
+
+    public String encrypt(String plainText) {
+<span class="fc" id="L24">        StringBuilder cipherText = new StringBuilder();</span>
+
+<span class="fc" id="L26">        char[] letters = plainText.toCharArray();</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (int i=0;i &lt; letters.length; i++) {</span>
+<span class="fc" id="L29">            String encryptedLetter = &quot; &quot;;</span>
+<span class="fc" id="L30">            String letterToEncrypt = String.valueOf(letters[i]);</span>
+
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            if (!letterToEncrypt.equals(&quot; &quot;)) {</span>
+<span class="fc" id="L33">                encryptedLetter = encryptMap.get(letterToEncrypt);</span>
+            }
+
+<span class="fc" id="L36">            cipherText.append(encryptedLetter);</span>
+        }
+
+<span class="fc" id="L39">        return cipherText.toString();</span>
+    }
+
+    public String decrypt(String plainText) {
+<span class="fc" id="L43">        StringBuilder cipherText = new StringBuilder();</span>
+
+<span class="fc" id="L45">        char[] letters = plainText.toCharArray();</span>
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (int i=0;i &lt; letters.length; i++) {</span>
+<span class="fc" id="L48">            String decryptedLetter = &quot; &quot;;</span>
+<span class="fc" id="L49">            String letterToDecrypt = String.valueOf(letters[i]);</span>
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if (!letterToDecrypt.equals(&quot; &quot;)) {</span>
+<span class="fc" id="L52">                decryptedLetter = decryptMap.get(letterToDecrypt);</span>
+            }
+
+<span class="fc" id="L55">            cipherText.append(decryptedLetter);</span>
+        }
+
+<span class="fc" id="L58">        return cipherText.toString();</span>
+    }
+
+    private HashMap&lt;String, String&gt; createEncryptionMap() {
+<span class="fc" id="L62">        encryptMap = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L63">        encryptMap.put(&quot;A&quot;, &quot;X&quot;);</span>
+<span class="fc" id="L64">        encryptMap.put(&quot;B&quot;, &quot;Y&quot;);</span>
+<span class="fc" id="L65">        encryptMap.put(&quot;C&quot;, &quot;Z&quot;);</span>
+<span class="fc" id="L66">        encryptMap.put(&quot;D&quot;, &quot;A&quot;);</span>
+<span class="fc" id="L67">        encryptMap.put(&quot;E&quot;, &quot;B&quot;);</span>
+<span class="fc" id="L68">        encryptMap.put(&quot;F&quot;, &quot;C&quot;);</span>
+<span class="fc" id="L69">        encryptMap.put(&quot;G&quot;, &quot;D&quot;);</span>
+<span class="fc" id="L70">        encryptMap.put(&quot;H&quot;, &quot;E&quot;);</span>
+<span class="fc" id="L71">        encryptMap.put(&quot;I&quot;, &quot;F&quot;);</span>
+<span class="fc" id="L72">        encryptMap.put(&quot;J&quot;, &quot;G&quot;);</span>
+<span class="fc" id="L73">        encryptMap.put(&quot;K&quot;, &quot;H&quot;);</span>
+<span class="fc" id="L74">        encryptMap.put(&quot;L&quot;, &quot;I&quot;);</span>
+<span class="fc" id="L75">        encryptMap.put(&quot;M&quot;, &quot;J&quot;);</span>
+<span class="fc" id="L76">        encryptMap.put(&quot;N&quot;, &quot;K&quot;);</span>
+<span class="fc" id="L77">        encryptMap.put(&quot;O&quot;, &quot;L&quot;);</span>
+<span class="fc" id="L78">        encryptMap.put(&quot;P&quot;, &quot;M&quot;);</span>
+<span class="fc" id="L79">        encryptMap.put(&quot;Q&quot;, &quot;N&quot;);</span>
+<span class="fc" id="L80">        encryptMap.put(&quot;R&quot;, &quot;O&quot;);</span>
+<span class="fc" id="L81">        encryptMap.put(&quot;S&quot;, &quot;P&quot;);</span>
+<span class="fc" id="L82">        encryptMap.put(&quot;T&quot;, &quot;Q&quot;);</span>
+<span class="fc" id="L83">        encryptMap.put(&quot;U&quot;, &quot;R&quot;);</span>
+<span class="fc" id="L84">        encryptMap.put(&quot;V&quot;, &quot;S&quot;);</span>
+<span class="fc" id="L85">        encryptMap.put(&quot;W&quot;, &quot;T&quot;);</span>
+<span class="fc" id="L86">        encryptMap.put(&quot;X&quot;, &quot;U&quot;);</span>
+<span class="fc" id="L87">        encryptMap.put(&quot;Y&quot;, &quot;V&quot;);</span>
+<span class="fc" id="L88">        encryptMap.put(&quot;Z&quot;, &quot;W&quot;);</span>
+
+<span class="fc" id="L90">        return encryptMap;</span>
+    }
+
+    private HashMap&lt;String, String&gt; createDncryptionMap() {
+<span class="fc" id="L94">        decryptMap = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L95">        decryptMap.put(&quot;X&quot;,&quot;A&quot;);</span>
+<span class="fc" id="L96">        decryptMap.put(&quot;Y&quot;,&quot;B&quot;);</span>
+<span class="fc" id="L97">        decryptMap.put(&quot;Z&quot;,&quot;C&quot;);</span>
+<span class="fc" id="L98">        decryptMap.put(&quot;A&quot;,&quot;D&quot;);</span>
+<span class="fc" id="L99">        decryptMap.put(&quot;B&quot;,&quot;E&quot;);</span>
+<span class="fc" id="L100">        decryptMap.put(&quot;C&quot;,&quot;F&quot;);</span>
+<span class="fc" id="L101">        decryptMap.put(&quot;D&quot;,&quot;G&quot;);</span>
+<span class="fc" id="L102">        decryptMap.put(&quot;E&quot;,&quot;H&quot;);</span>
+<span class="fc" id="L103">        decryptMap.put(&quot;F&quot;,&quot;I&quot;);</span>
+<span class="fc" id="L104">        decryptMap.put(&quot;G&quot;,&quot;J&quot;);</span>
+<span class="fc" id="L105">        decryptMap.put(&quot;H&quot;,&quot;K&quot;);</span>
+<span class="fc" id="L106">        decryptMap.put(&quot;I&quot;,&quot;L&quot;);</span>
+<span class="fc" id="L107">        decryptMap.put(&quot;J&quot;,&quot;M&quot;);</span>
+<span class="fc" id="L108">        decryptMap.put(&quot;K&quot;,&quot;N&quot;);</span>
+<span class="fc" id="L109">        decryptMap.put(&quot;L&quot;,&quot;O&quot;);</span>
+<span class="fc" id="L110">        decryptMap.put(&quot;M&quot;,&quot;P&quot;);</span>
+<span class="fc" id="L111">        decryptMap.put(&quot;N&quot;,&quot;Q&quot;);</span>
+<span class="fc" id="L112">        decryptMap.put(&quot;O&quot;,&quot;R&quot;);</span>
+<span class="fc" id="L113">        decryptMap.put(&quot;P&quot;,&quot;S&quot;);</span>
+<span class="fc" id="L114">        decryptMap.put(&quot;Q&quot;,&quot;T&quot;);</span>
+<span class="fc" id="L115">        decryptMap.put(&quot;R&quot;,&quot;U&quot;);</span>
+<span class="fc" id="L116">        decryptMap.put(&quot;S&quot;,&quot;V&quot;);</span>
+<span class="fc" id="L117">        decryptMap.put(&quot;T&quot;,&quot;W&quot;);</span>
+<span class="fc" id="L118">        decryptMap.put(&quot;U&quot;,&quot;X&quot;);</span>
+<span class="fc" id="L119">        decryptMap.put(&quot;V&quot;,&quot;Y&quot;);</span>
+<span class="fc" id="L120">        decryptMap.put(&quot;W&quot;,&quot;Z&quot; );</span>
+
+<span class="fc" id="L122">        return decryptMap;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

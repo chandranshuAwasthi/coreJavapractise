@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CaesarCipherAdvanced.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.classics</a> &gt; <span class="el_source">CaesarCipherAdvanced.java</span></div><h1>CaesarCipherAdvanced.java</h1><pre class="source lang-java linenums">package challenges.classics;
+
+public class CaesarCipherAdvanced {
+
+    //
+    // This is a more algorithmic way of solving the Caesar Cipher using the following equations
+    //
+    // E(x) = (x + n) mod 26
+    // D(x) = (x - n) mod 26
+    //
+    // x = letter
+    // n = offset
+
+    // What these equations basically say is, you can take any given letter, shift it by it's offset, and then
+    // modulus 26 that result (25 letters in the alphabet).
+    //
+    // By applying this equation, we can come up with a more generic cipher algorithm, that encrypts and decrypts
+    // for any generic offset (n).
+    //
+    // https://en.wikipedia.org/wiki/Caesar_cipher
+    // http://www.sanfoundry.com/java-program-implement-caesar-cypher/ (based on)
+
+    // Assumption: Upper case only
+
+    public static final String ALPHABET = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+
+<span class="fc" id="L27">    public CaesarCipherAdvanced() {</span>
+<span class="fc" id="L28">    }</span>
+
+    public String encrypt(String plainText, int n) {
+
+<span class="fc" id="L32">        StringBuilder cipherText = new StringBuilder();</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (int i = 0; i &lt; plainText.length(); i++) { // O(n)</span>
+<span class="fc" id="L35">            char charToEncrypt = plainText.charAt(i);</span>
+<span class="fc" id="L36">            char replaceVal = ' ';</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            if (charToEncrypt != ' ') {</span>
+<span class="fc" id="L39">                int x = ALPHABET.indexOf(charToEncrypt);</span>
+<span class="fc" id="L40">                int keyVal = (n + x) % 26;</span>
+<span class="fc" id="L41">                replaceVal = ALPHABET.charAt(keyVal);</span>
+            }
+
+<span class="fc" id="L44">            cipherText.append(replaceVal); // O(1) because using StringBuffer</span>
+        }
+
+<span class="fc" id="L47">        return cipherText.toString();</span>
+
+        // Runtime: Originally I coded this concatenating the result +=
+        //
+        //             cipherText += replaceVal;
+        //
+        // which was O(n^2) or quadratic. This isn't great for performance.
+        // By switching to a StringBuilder, we get O(1) performance when combining the strings.
+        // Which makes the overall runtime of the operation O(n) because of the for loop.
+        //
+    }
+
+    public String decrypt(String cipherText, int n) {
+
+<span class="fc" id="L61">        StringBuilder plainText = new StringBuilder();</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (int i = 0; i &lt; cipherText.length(); i++) {</span>
+<span class="fc" id="L64">            char charToDecrypt = cipherText.charAt(i);</span>
+<span class="fc" id="L65">            char replaceVal = ' ';</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (charToDecrypt != ' ') {</span>
+<span class="fc" id="L68">                int x = ALPHABET.indexOf(charToDecrypt);</span>
+<span class="fc" id="L69">                int keyVal = (x - n) % 26;</span>
+
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">                if (keyVal &lt; 0) {</span>
+<span class="nc" id="L72">                    keyVal = ALPHABET.length() + keyVal;</span>
+                }
+
+<span class="fc" id="L75">                replaceVal = ALPHABET.charAt(keyVal);</span>
+            }
+
+<span class="fc" id="L78">            plainText.append(replaceVal);</span>
+        }
+
+<span class="fc" id="L81">        return plainText.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

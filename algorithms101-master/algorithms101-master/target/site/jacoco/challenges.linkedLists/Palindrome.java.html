@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Palindrome.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">challenges.linkedLists</a> &gt; <span class="el_source">Palindrome.java</span></div><h1>Palindrome.java</h1><pre class="source lang-java linenums">package challenges.linkedLists;
+
+
+import java.util.Stack;
+
+<span class="fc" id="L6">public class Palindrome {</span>
+
+
+    public boolean isPalindrome(String text) {
+
+        // Idea here is to take string and stick it in a Stack.
+        // Then, depending on whether the string has an old or even length,
+        // pop the letters off one stack and push them into another.
+        // Once we hit out mid point, we can then pop them off together and see
+        // if they match. So long as they do, we potentially have a palindrome.
+        // As soon as they don't, we will know we won't.
+
+<span class="nc" id="L18">        Stack&lt;String&gt; original = new Stack&lt;String&gt;();</span>
+<span class="nc" id="L19">        Stack&lt;String&gt; reverse = new Stack&lt;String&gt;();</span>
+
+        // build original stack
+<span class="nc" id="L22">        char[] letters = text.toCharArray();</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        for (int i = 0; i &lt; letters.length; i++) {</span>
+<span class="nc" id="L24">            char letter = letters[i];</span>
+<span class="nc" id="L25">            String letterAsString = String.valueOf(letter);</span>
+<span class="nc" id="L26">            original.push(letterAsString);</span>
+        }
+
+<span class="nc" id="L29">        int midPoint = 0;</span>
+<span class="nc" id="L30">        midPoint = text.length() / 2;</span>
+
+        // collect and pop half of them off
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (int i = 0; i &lt; midPoint; i++) {</span>
+<span class="nc" id="L34">            reverse.push(original.pop());</span>
+        }
+
+        // pop off middle letter due to odd length string
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (text.length() % 2 != 0) {</span>
+<span class="nc" id="L39">            original.pop();</span>
+<span class="nc" id="L40">            System.out.println(&quot;Odd...&quot;);</span>
+        }
+
+        // compare
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        for (int i = 0; i &lt; midPoint; i++) {</span>
+<span class="nc" id="L45">            String orig = original.pop();</span>
+<span class="nc" id="L46">            String rev = reverse.pop();</span>
+<span class="nc" id="L47">            System.out.println(i + &quot; &quot; + orig + &quot; &quot; + rev);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            if (!orig.equals(rev)) {</span>
+<span class="nc" id="L49">                return false;</span>
+            }
+        }
+
+<span class="nc" id="L53">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

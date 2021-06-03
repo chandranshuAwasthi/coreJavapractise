@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrettyPrinter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">algorithms</a> &gt; <a href="index.source.html" class="el_package">datastructures</a> &gt; <span class="el_source">PrettyPrinter.java</span></div><h1>PrettyPrinter.java</h1><pre class="source lang-java linenums">package datastructures;
+
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="nc" id="L6">public class PrettyPrinter {</span>
+
+    public static void printMatrix(int[][] matrix) {
+
+<span class="fc" id="L10">        int rowCount = matrix.length; // y</span>
+<span class="fc" id="L11">        int columnCount = matrix[0].length; // x</span>
+
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        for (int row = 0; row &lt; rowCount; row++) {</span>
+<span class="fc" id="L14">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">            for (int col = 0; col &lt; columnCount; col++) {</span>
+<span class="fc" id="L16">                sb.append(matrix[row][col] + &quot; &quot;);</span>
+            }
+<span class="fc" id="L18">            System.out.println(sb.toString());</span>
+        }
+<span class="fc" id="L20">        System.out.println(&quot;&quot;);</span>
+<span class="fc" id="L21">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
